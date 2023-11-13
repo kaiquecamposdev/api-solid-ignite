@@ -1,6 +1,12 @@
+# Dependecies
 node_modules/
 
+# Tests
+coverage/
+
+# Build
 dist/
 build/
 
+# Environments
 .env
