@@ -5,7 +5,7 @@ import * as z from 'zod'
 
 export async function authenticate(
   request: FastifyRequest,
-  reply: FastifyReply,
+  response: FastifyReply,
 ) {
   const authenticateBodySchema = z.object({
     email: z.string().email(),
@@ -20,11 +20,11 @@ export async function authenticate(
     await authenticateUseCase.execute({ email, password })
   } catch (error) {
     if (error instanceof InvalidCredentialsError) {
-      return reply.status(400).send({ message: error.message })
+      return response.status(400).send({ message: error.message })
     }
 
     throw error
   }
 
-  return reply.status(200).send()
+  return response.status(200).send()
 }

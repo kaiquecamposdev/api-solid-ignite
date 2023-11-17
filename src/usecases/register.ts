@@ -8,7 +8,7 @@ interface RegisterUseCaseRequest {
   email: string
   password: string
 }
-interface RegisterUseCaseReply {
+interface RegisterUseCaseResponse {
   user: User
 }
 
@@ -19,7 +19,7 @@ export class RegisterUseCase {
     name,
     email,
     password,
-  }: RegisterUseCaseRequest): Promise<RegisterUseCaseReply> {
+  }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
     const password_hash = await hash(password, 6)
 
     const userWithSameEmail = await this.usersRepository.findByEmail(email)
