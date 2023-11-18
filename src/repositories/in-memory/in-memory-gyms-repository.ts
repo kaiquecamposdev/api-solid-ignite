@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto'
 import { FindManyNearbyParams, GymsRepository } from '../gyms-repository'
 
 export class InMemoryGymsRepository implements GymsRepository {
-  private items: Gym[] = []
+  public items: Gym[] = []
 
   async create(data: Prisma.GymCreateInput) {
     const gym = {
