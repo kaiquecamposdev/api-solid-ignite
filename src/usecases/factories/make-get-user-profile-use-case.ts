@@ -7,5 +7,5 @@ export function makeRegisterUseCase() {
     prismaGetUserProfileUseCaseRepository,
   )
 
-  return registerUseCase
+  return getUserProfileUseCase
 }
