@@ -1,4 +1,4 @@
-import { CheckInRepository } from '@/repositories/check-ins-repository'
+import { CheckInsRepository } from '@/repositories/check-ins-repository'
 
 interface GetUserMetricsRequest {
   userId: string
@@ -8,7 +8,7 @@ interface GetUserMetricsResponse {
 }
 
 export class GetUserMetricsUseCase {
-  constructor(private checkInsRepository: CheckInRepository) {}
+  constructor(private checkInsRepository: CheckInsRepository) {}
 
   async execute({
     userId,
