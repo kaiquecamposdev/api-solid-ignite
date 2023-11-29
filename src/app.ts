@@ -1,3 +1,4 @@
+import { fastifyJwt } from '@fastify/jwt'
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './env'
@@ -5,11 +6,14 @@ import { appRoutes } from './http/routes'
 
 export const app = fastify()
 
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+})
 app.register(appRoutes)
 
-app.setErrorHandler((error, _request, reply) => {
+app.setErrorHandler((error, _request, response) => {
   if (error instanceof ZodError) {
-    reply
+    response
       .status(400)
       .send({ message: 'Validation Error.', issues: error.format() })
   }
@@ -18,5 +22,5 @@ app.setErrorHandler((error, _request, reply) => {
     console.error(error)
   }
 
-  return reply.status(500).send({ message: 'Internal Server Error.' })
+  return response.status(500).send({ message: 'Internal Server Error.' })
 })
