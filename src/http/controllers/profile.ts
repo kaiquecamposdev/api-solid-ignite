@@ -1,18 +1,17 @@
-import { UnauthorizedError } from '@/usecases/errors/unauthorized-error'
+import { makeGetUserProfileUseCase } from '@/usecases/factories/make-get-user-profile-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function profile(request: FastifyRequest, response: FastifyReply) {
-  try {
-    await request.jwtVerify()
+  const getUserProfile = makeGetUserProfileUseCase()
 
-    console.log(request.user.sub)
-  } catch (error) {
-    if (error instanceof UnauthorizedError) {
-      return response.status(401).send({ message: error.message })
-    }
+  const { user } = await getUserProfile.execute({
+    userId: request.user.sub,
+  })
 
-    throw error
-  }
-
-  return response.status(200).send()
+  return response.status(200).send({
+    user: {
+      ...user,
+      password_hash: undefined,
+    },
+  })
 }
